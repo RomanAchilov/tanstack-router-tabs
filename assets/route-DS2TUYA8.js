@@ -1,0 +1,1 @@
+import{j as t,R as a,O as s}from"./index-DKEm3d5n.js";const b=[{label:"Tab A",to:"/tabs/tab-a"},{label:"Tab B",to:"/tabs/tab-b"},{label:"Tab C",to:"/tabs/tab-c"}];function e(){return t.jsxs("div",{children:[t.jsx(a,{tabs:b}),t.jsx("div",{className:"rounded-lg border bg-background p-6",children:t.jsx(s,{})})]})}export{e as component};
