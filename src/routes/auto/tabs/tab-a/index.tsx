@@ -1,9 +1,9 @@
 import { createFileRoute } from '@tanstack/react-router'
 
-export const Route = createFileRoute('/tabs/tab-b/')({
+export const Route = createFileRoute('/auto/tabs/tab-a/')({
   component: RouteComponent,
 })
 
 function RouteComponent() {
-  return <div>Hello "/tabs/tab-b/"!</div>
+  return <div>Hello "/tabs/tab-a/"!</div>
 }

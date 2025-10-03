@@ -9,88 +9,102 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as TabsRouteRouteImport } from './routes/tabs/route'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as TabsTabCIndexRouteImport } from './routes/tabs/tab-c/index'
-import { Route as TabsTabBIndexRouteImport } from './routes/tabs/tab-b/index'
-import { Route as TabsTabAIndexRouteImport } from './routes/tabs/tab-a/index'
+import { Route as AutoIndexRouteImport } from './routes/auto/index'
+import { Route as AutoTabsRouteRouteImport } from './routes/auto/tabs/route'
+import { Route as AutoTabsTabCIndexRouteImport } from './routes/auto/tabs/tab-c/index'
+import { Route as AutoTabsTabBIndexRouteImport } from './routes/auto/tabs/tab-b/index'
+import { Route as AutoTabsTabAIndexRouteImport } from './routes/auto/tabs/tab-a/index'
 
-const TabsRouteRoute = TabsRouteRouteImport.update({
-  id: '/tabs',
-  path: '/tabs',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const TabsTabCIndexRoute = TabsTabCIndexRouteImport.update({
+const AutoIndexRoute = AutoIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AutoRouteRoute,
+} as any)
+const AutoTabsRouteRoute = AutoTabsRouteRouteImport.update({
+  id: '/tabs',
+  path: '/tabs',
+  getParentRoute: () => AutoRouteRoute,
+} as any)
+const AutoTabsTabCIndexRoute = AutoTabsTabCIndexRouteImport.update({
   id: '/tab-c/',
   path: '/tab-c/',
-  getParentRoute: () => TabsRouteRoute,
+  getParentRoute: () => AutoTabsRouteRoute,
 } as any)
-const TabsTabBIndexRoute = TabsTabBIndexRouteImport.update({
+const AutoTabsTabBIndexRoute = AutoTabsTabBIndexRouteImport.update({
   id: '/tab-b/',
   path: '/tab-b/',
-  getParentRoute: () => TabsRouteRoute,
+  getParentRoute: () => AutoTabsRouteRoute,
 } as any)
-const TabsTabAIndexRoute = TabsTabAIndexRouteImport.update({
+const AutoTabsTabAIndexRoute = AutoTabsTabAIndexRouteImport.update({
   id: '/tab-a/',
   path: '/tab-a/',
-  getParentRoute: () => TabsRouteRoute,
+  getParentRoute: () => AutoTabsRouteRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/tabs': typeof TabsRouteRouteWithChildren
-  '/tabs/tab-a': typeof TabsTabAIndexRoute
-  '/tabs/tab-b': typeof TabsTabBIndexRoute
-  '/tabs/tab-c': typeof TabsTabCIndexRoute
+  '/auto/tabs': typeof AutoTabsRouteRouteWithChildren
+  '/auto/': typeof AutoIndexRoute
+  '/auto/tabs/tab-a': typeof AutoTabsTabAIndexRoute
+  '/auto/tabs/tab-b': typeof AutoTabsTabBIndexRoute
+  '/auto/tabs/tab-c': typeof AutoTabsTabCIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/tabs': typeof TabsRouteRouteWithChildren
-  '/tabs/tab-a': typeof TabsTabAIndexRoute
-  '/tabs/tab-b': typeof TabsTabBIndexRoute
-  '/tabs/tab-c': typeof TabsTabCIndexRoute
+  '/auto/tabs': typeof AutoTabsRouteRouteWithChildren
+  '/auto': typeof AutoIndexRoute
+  '/auto/tabs/tab-a': typeof AutoTabsTabAIndexRoute
+  '/auto/tabs/tab-b': typeof AutoTabsTabBIndexRoute
+  '/auto/tabs/tab-c': typeof AutoTabsTabCIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/tabs': typeof TabsRouteRouteWithChildren
-  '/tabs/tab-a/': typeof TabsTabAIndexRoute
-  '/tabs/tab-b/': typeof TabsTabBIndexRoute
-  '/tabs/tab-c/': typeof TabsTabCIndexRoute
+  '/auto/tabs': typeof AutoTabsRouteRouteWithChildren
+  '/auto/': typeof AutoIndexRoute
+  '/auto/tabs/tab-a/': typeof AutoTabsTabAIndexRoute
+  '/auto/tabs/tab-b/': typeof AutoTabsTabBIndexRoute
+  '/auto/tabs/tab-c/': typeof AutoTabsTabCIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/tabs' | '/tabs/tab-a' | '/tabs/tab-b' | '/tabs/tab-c'
+  fullPaths:
+    | '/'
+    | '/auto/tabs'
+    | '/auto/'
+    | '/auto/tabs/tab-a'
+    | '/auto/tabs/tab-b'
+    | '/auto/tabs/tab-c'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/tabs' | '/tabs/tab-a' | '/tabs/tab-b' | '/tabs/tab-c'
+  to:
+    | '/'
+    | '/auto/tabs'
+    | '/auto'
+    | '/auto/tabs/tab-a'
+    | '/auto/tabs/tab-b'
+    | '/auto/tabs/tab-c'
   id:
     | '__root__'
     | '/'
-    | '/tabs'
-    | '/tabs/tab-a/'
-    | '/tabs/tab-b/'
-    | '/tabs/tab-c/'
+    | '/auto/tabs'
+    | '/auto/'
+    | '/auto/tabs/tab-a/'
+    | '/auto/tabs/tab-b/'
+    | '/auto/tabs/tab-c/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  TabsRouteRoute: typeof TabsRouteRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/tabs': {
-      id: '/tabs'
-      path: '/tabs'
-      fullPath: '/tabs'
-      preLoaderRoute: typeof TabsRouteRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/': {
       id: '/'
       path: '/'
@@ -98,49 +112,46 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/tabs/tab-c/': {
-      id: '/tabs/tab-c/'
+    '/auto/': {
+      id: '/auto/'
+      path: '/'
+      fullPath: '/auto/'
+      preLoaderRoute: typeof AutoIndexRouteImport
+      parentRoute: typeof AutoRouteRoute
+    }
+    '/auto/tabs': {
+      id: '/auto/tabs'
+      path: '/tabs'
+      fullPath: '/auto/tabs'
+      preLoaderRoute: typeof AutoTabsRouteRouteImport
+      parentRoute: typeof AutoRouteRoute
+    }
+    '/auto/tabs/tab-c/': {
+      id: '/auto/tabs/tab-c/'
       path: '/tab-c'
-      fullPath: '/tabs/tab-c'
-      preLoaderRoute: typeof TabsTabCIndexRouteImport
-      parentRoute: typeof TabsRouteRoute
+      fullPath: '/auto/tabs/tab-c'
+      preLoaderRoute: typeof AutoTabsTabCIndexRouteImport
+      parentRoute: typeof AutoTabsRouteRoute
     }
-    '/tabs/tab-b/': {
-      id: '/tabs/tab-b/'
+    '/auto/tabs/tab-b/': {
+      id: '/auto/tabs/tab-b/'
       path: '/tab-b'
-      fullPath: '/tabs/tab-b'
-      preLoaderRoute: typeof TabsTabBIndexRouteImport
-      parentRoute: typeof TabsRouteRoute
+      fullPath: '/auto/tabs/tab-b'
+      preLoaderRoute: typeof AutoTabsTabBIndexRouteImport
+      parentRoute: typeof AutoTabsRouteRoute
     }
-    '/tabs/tab-a/': {
-      id: '/tabs/tab-a/'
+    '/auto/tabs/tab-a/': {
+      id: '/auto/tabs/tab-a/'
       path: '/tab-a'
-      fullPath: '/tabs/tab-a'
-      preLoaderRoute: typeof TabsTabAIndexRouteImport
-      parentRoute: typeof TabsRouteRoute
+      fullPath: '/auto/tabs/tab-a'
+      preLoaderRoute: typeof AutoTabsTabAIndexRouteImport
+      parentRoute: typeof AutoTabsRouteRoute
     }
   }
 }
 
-interface TabsRouteRouteChildren {
-  TabsTabAIndexRoute: typeof TabsTabAIndexRoute
-  TabsTabBIndexRoute: typeof TabsTabBIndexRoute
-  TabsTabCIndexRoute: typeof TabsTabCIndexRoute
-}
-
-const TabsRouteRouteChildren: TabsRouteRouteChildren = {
-  TabsTabAIndexRoute: TabsTabAIndexRoute,
-  TabsTabBIndexRoute: TabsTabBIndexRoute,
-  TabsTabCIndexRoute: TabsTabCIndexRoute,
-}
-
-const TabsRouteRouteWithChildren = TabsRouteRoute._addFileChildren(
-  TabsRouteRouteChildren,
-)
-
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  TabsRouteRoute: TabsRouteRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
