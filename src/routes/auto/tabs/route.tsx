@@ -1,4 +1,4 @@
-import { createFileRoute, Outlet } from "@tanstack/react-router";
+import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
 
 import { type RouterTabItem, RouterTabs } from "@/components/RouterTabs";
 
@@ -9,6 +9,13 @@ const tabs: RouterTabItem[] = [
 ];
 
 export const Route = createFileRoute("/auto/tabs")({
+	beforeLoad: ({ location }) => {
+		const { pathname, state } = location;
+
+		if (pathname === "/auto/tabs") {
+			throw redirect({ to: state.from, replace: true });
+		}
+	},
 	component: RouteComponent,
 });
 
@@ -20,5 +27,5 @@ function RouteComponent() {
 				<Outlet />
 			</div>
 		</div>
-	)
+	);
 }

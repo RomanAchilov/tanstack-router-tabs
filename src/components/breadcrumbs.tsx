@@ -3,6 +3,7 @@ import { ChevronRight } from "lucide-react";
 
 export function Breadcrumbs() {
 	const { breadcrumb_routes } = useTSRBreadCrumbs();
+	const location = useLocation();
 	if (breadcrumb_routes.length < 1) return null;
 	return (
 		<div className="w-full flex flex-wrap">
@@ -22,7 +23,11 @@ export function Breadcrumbs() {
 						key={crumb.path}
 						className="flex gap-1 justify-center items-center"
 					>
-						<Link className="text-xs bread-crumbs-links" to={crumb.path}>
+						<Link
+							className="text-xs bread-crumbs-links"
+							state={(prev) => ({ ...prev, from: location.pathname })}
+							to={crumb.path}
+						>
 							{crumb.name}
 						</Link>
 						<ChevronRight className="size-4" />

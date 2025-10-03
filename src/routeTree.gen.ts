@@ -22,14 +22,14 @@ const IndexRoute = IndexRouteImport.update({
   getParentRoute: () => rootRouteImport,
 } as any)
 const AutoIndexRoute = AutoIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => AutoRouteRoute,
+  id: '/auto/',
+  path: '/auto/',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const AutoTabsRouteRoute = AutoTabsRouteRouteImport.update({
-  id: '/tabs',
-  path: '/tabs',
-  getParentRoute: () => AutoRouteRoute,
+  id: '/auto/tabs',
+  path: '/auto/tabs',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const AutoTabsTabCIndexRoute = AutoTabsTabCIndexRouteImport.update({
   id: '/tab-c/',
@@ -50,7 +50,7 @@ const AutoTabsTabAIndexRoute = AutoTabsTabAIndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auto/tabs': typeof AutoTabsRouteRouteWithChildren
-  '/auto/': typeof AutoIndexRoute
+  '/auto': typeof AutoIndexRoute
   '/auto/tabs/tab-a': typeof AutoTabsTabAIndexRoute
   '/auto/tabs/tab-b': typeof AutoTabsTabBIndexRoute
   '/auto/tabs/tab-c': typeof AutoTabsTabCIndexRoute
@@ -77,7 +77,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/auto/tabs'
-    | '/auto/'
+    | '/auto'
     | '/auto/tabs/tab-a'
     | '/auto/tabs/tab-b'
     | '/auto/tabs/tab-c'
@@ -101,6 +101,8 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AutoTabsRouteRoute: typeof AutoTabsRouteRouteWithChildren
+  AutoIndexRoute: typeof AutoIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -114,17 +116,17 @@ declare module '@tanstack/react-router' {
     }
     '/auto/': {
       id: '/auto/'
-      path: '/'
-      fullPath: '/auto/'
+      path: '/auto'
+      fullPath: '/auto'
       preLoaderRoute: typeof AutoIndexRouteImport
-      parentRoute: typeof AutoRouteRoute
+      parentRoute: typeof rootRouteImport
     }
     '/auto/tabs': {
       id: '/auto/tabs'
-      path: '/tabs'
+      path: '/auto/tabs'
       fullPath: '/auto/tabs'
       preLoaderRoute: typeof AutoTabsRouteRouteImport
-      parentRoute: typeof AutoRouteRoute
+      parentRoute: typeof rootRouteImport
     }
     '/auto/tabs/tab-c/': {
       id: '/auto/tabs/tab-c/'
@@ -150,8 +152,26 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface AutoTabsRouteRouteChildren {
+  AutoTabsTabAIndexRoute: typeof AutoTabsTabAIndexRoute
+  AutoTabsTabBIndexRoute: typeof AutoTabsTabBIndexRoute
+  AutoTabsTabCIndexRoute: typeof AutoTabsTabCIndexRoute
+}
+
+const AutoTabsRouteRouteChildren: AutoTabsRouteRouteChildren = {
+  AutoTabsTabAIndexRoute: AutoTabsTabAIndexRoute,
+  AutoTabsTabBIndexRoute: AutoTabsTabBIndexRoute,
+  AutoTabsTabCIndexRoute: AutoTabsTabCIndexRoute,
+}
+
+const AutoTabsRouteRouteWithChildren = AutoTabsRouteRoute._addFileChildren(
+  AutoTabsRouteRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AutoTabsRouteRoute: AutoTabsRouteRouteWithChildren,
+  AutoIndexRoute: AutoIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
